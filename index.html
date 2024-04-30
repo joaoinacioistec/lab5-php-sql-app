@@ -5,30 +5,26 @@
 <h1>My first PHP page</h1>
 
 <?php
-
-
-$connectionInfo = array("UID" => "sqladmin", "pwd" => "Omopla1@", "Database" => "sqlbd-lab5", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
-$serverName = "tcp:sqlbd-lab5.database.windows.net,1433";
-$conn = sqlsrv_connect($serverName, $connectionInfo);
-
-    if( $conn === false ) {
-     die( print_r( sqlsrv_errors(), true));
-} else {
-    print "Good DB Connection: $conn<br>";
+try {
+    $conn = new PDO("sqlsrv:server = tcp:sqlbd-lab5.database.windows.net,1433; Database = sqlbd-lab5", "sqladmin", "Omopla1@");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 );
+    }
+ 
+catch (PDOException $e) {
+    print("Error connecting to SQL Server.");
+    die(print_r($e));
 }
-    
-print "<h2>Query Example 1 | Fetching by Associate Array</h2>";
-$sql = "SELECT * FROM Users";
-print "SQL: $sql\n";
-$result = sqlsrv_query($conn, $sql);
-if($result === false) {
-    die(print_r(sqlsrv_errors(), true));
-}
-#Fetching Data by array
-while($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
-    print_r($row);
-}
-    
+  
+$query = 'select * from dbo.Users';  
+  
+// simple query  
+$stmt = $conn->query( $query );  
+while ( $row = $stmt->fetch( PDO::FETCH_ASSOC ) ){  
+   print_r( $row['Name'] ."\n" );  
+}  
+  
+echo "\n........ query for a column ............\n";      
 ?>
 
 </body>
