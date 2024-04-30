@@ -5,15 +5,10 @@
 <h1>My first PHP page</h1>
 
 <?php
-try {
-    $conn = new PDO("sqlsrv:server = tcp:sqlbd-lab5.database.windows.net,1433; Database = sqlbd-lab5", "sqladmin", "Omopla1@");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
- 
-catch (PDOException $e) {
-    print("Error connecting to SQL Server.");
-    die(print_r($e));
-}
+$database = "sqldb-lab5";  
+$conn = new PDO( "sqlsrv:server= tcp:sqlbd-lab5.database.windows.net,1433; Database = $database", "sqladmin", "Omopla1");  
+$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
+$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 );  
   
 $query = 'select * from dbo.Users';  
   
@@ -23,7 +18,7 @@ while ( $row = $stmt->fetch( PDO::FETCH_ASSOC ) ){
    print_r( $row['Name'] ."\n" );  
 }  
   
-echo "\n........ query for a column ............\n";      
+echo "\n........ query for a column ............\n";
 ?>
 
 </body>
