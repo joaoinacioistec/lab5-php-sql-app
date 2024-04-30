@@ -8,7 +8,6 @@
 try {
     $conn = new PDO("sqlsrv:server = tcp:sqlbd-lab5.database.windows.net,1433; Database = sqlbd-lab5", "sqladmin", "Omopla1@");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 );
     }
  
 catch (PDOException $e) {
