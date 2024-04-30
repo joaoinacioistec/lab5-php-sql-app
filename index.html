@@ -5,19 +5,18 @@
 <h1>My first PHP page</h1>
 
 <?php
-$database = "sqldb-lab5";  
-$conn = new PDO( "sqlsrv:server= tcp:sqlbd-lab5.database.windows.net,1433; Database = $database", "sqladmin", "Omopla1");  
-$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
-$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 );  
-  
-$query = 'select * from dbo.Users';  
-  
-// simple query  
-$stmt = $conn->query( $query );  
-while ( $row = $stmt->fetch( PDO::FETCH_ASSOC ) ){  
-   print_r( $row['Name'] ."\n" );  
-}  
-  
+$database = "sqldb-lab5";
+  $user ="sqladmin";
+  $password="Omopla1@";
+$conn = new PDO( "sqlsrv:server= tcp:sqlbd-lab5.database.windows.net,1433; Database = $database", $user, $password);
+$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+$conn->setAttribute( PDO::SQLSRV_ATTR_QUERY_TIMEOUT, 1 );
+$query = 'select * from dbo.Users';
+// simple query
+$stmt = $conn->query( $query );
+while ( $row = $stmt->fetch( PDO::FETCH_ASSOC ) ){
+   print_r( $row['Name'] ."\n" );
+}
 echo "\n........ query for a column ............\n";
 ?>
 
